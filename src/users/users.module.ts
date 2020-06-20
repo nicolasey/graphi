@@ -5,7 +5,18 @@ import { UserSchema } from './user.schema';
 import { UsersService } from './users.service';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'User', schema: UserSchema }])],
+  imports: [
+    MongooseModule.forFeatureAsync([
+      {
+        name: 'User',
+        useFactory: () => {
+          const schema = UserSchema;
+          schema.plugin(require('mongoose-slug-plugin'), { tmpl: '<%=name%>' });
+          return schema;
+        },
+      },
+    ]),
+  ],
   providers: [UsersResolver, UsersService],
 })
 export class UsersModule {}

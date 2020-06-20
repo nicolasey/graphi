@@ -13,12 +13,16 @@ export class User extends Document {
   name: string;
 
   @Field()
+  @Prop()
+  slug: string;
+
+  @Field()
   @Prop({ required: true, unique: true })
   email: string;
 
   @Field()
   @Prop({ nullable: true })
-  password: string;
+  password?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
