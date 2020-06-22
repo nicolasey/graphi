@@ -7,7 +7,6 @@ type User {
   name: String!
   slug: String!
   email: String!
-  password: String!
 }
 
 type Query {

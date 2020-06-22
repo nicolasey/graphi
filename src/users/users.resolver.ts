@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { User } from './user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 
-@Resolver()
+@Resolver(of => User)
 export class UsersResolver {
   constructor(private readonly userS: UsersService) {}
 
