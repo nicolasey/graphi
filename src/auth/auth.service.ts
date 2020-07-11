@@ -23,6 +23,7 @@ export class AuthService {
       return new AuthSuccess(token, user);
     } catch (err) {
       Logger.error(err, 'Login try as ' + input.email);
+      throw new NotFoundException('error.login');
     }
   }
 
