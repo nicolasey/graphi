@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
       autoSchemaFile: 'schema.gql',
     }),
     MongooseModule.forRoot('mongodb://localhost/graphi'),
+    ConfigModule.forRoot({ isGlobal: true }),
     UsersModule,
     AuthModule,
   ],
