@@ -9,8 +9,20 @@ type User {
   email: String!
 }
 
+type AuthSuccess {
+  token: String!
+  user: User!
+}
+
 type Query {
   users: [User!]!
+  login(input: LoginInput!): AuthSuccess!
+  me: User!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
 
 type Mutation {
