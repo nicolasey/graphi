@@ -17,6 +17,7 @@ type AuthSuccess {
 type Query {
   users: [User!]!
   login(input: LoginInput!): AuthSuccess!
+  me: User!
 }
 
 input LoginInput {
