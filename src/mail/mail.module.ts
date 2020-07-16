@@ -3,6 +3,7 @@ import { BullModule } from '@nestjs/bull';
 import { MailService } from './services/mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -32,12 +33,15 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         },
       },
     }),
-    BullModule.registerQueue({
+    BullModule.registerQueueAsync({
       name: 'email',
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      },
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('QUEUE_HOST'),
+          port: +configService.get('QUEUE_PORT'),
+        },
+      }),
     }),
   ],
   exports: [MailService],
