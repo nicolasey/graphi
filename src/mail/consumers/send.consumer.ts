@@ -19,13 +19,16 @@ export class SenderConsumer {
 
   @Process()
   async send(job: Job<MailInterface>) {
-    this.mailS.sendMail({
-      to: job.data.to,
-      from: this.config.get('MAIL_FROM'),
-      subject: job.data.subject,
-      template: job.data.template,
-      context: job.data.context,
-    });
+    await this.mailS
+      .sendMail({
+        to: job.data.to,
+        from: this.config.get('MAIL_FROM'),
+        subject: job.data.subject,
+        template: job.data.template,
+        context: job.data.context,
+      })
+      .then(() => Logger.log('Mail sent to ' + job.data.to, 'Mail Consumer'))
+      .catch(err => Logger.error(err, 'Mail Consumer'));
   }
 
   @OnQueueError()
@@ -36,7 +39,7 @@ export class SenderConsumer {
   @OnQueueCompleted()
   completed(job: Job<MailInterface>, result: any) {
     Logger.log(
-      'Mail' + job.data.template + 'completed for ' + job.data.to,
+      'Mail ' + job.data.template + ' completed for ' + job.data.to,
       'Mail Queue',
     );
   }
