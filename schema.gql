@@ -33,6 +33,7 @@ input LoginInput {
 
 type Mutation {
   createUser(input: CreateUserDto!): User!
+  validateUser(validationCode: String!, id: String!): Boolean!
 }
 
 input CreateUserDto {

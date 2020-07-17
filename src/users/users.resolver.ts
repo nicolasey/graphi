@@ -12,11 +12,19 @@ export class UsersResolver {
   @Query(() => [User])
   @UseGuards(AuthGuard)
   async users() {
-    return this.userS.findAll();
+    return await this.userS.findAll();
   }
 
   @Mutation(() => User)
   async createUser(@Args('input') input: CreateUserDto) {
-    return this.userS.create(input);
+    return await this.userS.create(input);
+  }
+
+  @Mutation(() => Boolean)
+  async validateUser(
+    @Args('id') id: string,
+    @Args('validationCode') validationCode: string,
+  ) {
+    return await this.userS.validate(id, validationCode);
   }
 }
