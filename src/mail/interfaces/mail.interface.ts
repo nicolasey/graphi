@@ -3,5 +3,5 @@ export interface MailInterface {
   from?: string;
   template: string;
   subject: string;
-  context?: JSON;
+  context?: any;
 }
