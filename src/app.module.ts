@@ -1,4 +1,4 @@
-import { Module, Request, Response, Logger } from '@nestjs/common';
+import { Module, Request, Response, Headers } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
