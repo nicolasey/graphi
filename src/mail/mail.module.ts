@@ -5,6 +5,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ConfigService } from '@nestjs/config';
 import { SenderConsumer } from './consumers/send.consumer';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { SenderConsumer } from './consumers/send.consumer';
         },
       }),
     }),
+    CqrsModule,
   ],
   exports: [MailService],
   providers: [MailService, SenderConsumer],

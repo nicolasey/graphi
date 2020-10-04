@@ -9,12 +9,15 @@ import { MailInterface } from '../interfaces/mail.interface';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
+import { EventBus } from '@nestjs/cqrs';
+import { MailSentEvent } from '../events/mail-sent.event';
 
 @Processor('email')
 export class SenderConsumer {
   constructor(
     private mailS: MailerService,
     private readonly config: ConfigService,
+    private eventBus: EventBus,
   ) {}
 
   @Process()
@@ -42,5 +45,6 @@ export class SenderConsumer {
       'Mail ' + job.data.template + ' completed for ' + job.data.to,
       'Mail Queue',
     );
+    this.eventBus.publish(new MailSentEvent(job.data))
   }
 }
