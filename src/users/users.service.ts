@@ -56,7 +56,7 @@ export class UsersService {
     return this.userModel.findOne({ _id: id }).exec();
   }
 
-  async validate(id: string, validationCode: string) {
+  async validate(id: string, validationCode: string): Promise<User> {
     try {
       const user = await this.find(id);
       if (!user) {
@@ -68,7 +68,7 @@ export class UsersService {
         user.validationCode = undefined;
         await user.save();
         this.eventBus.publish(new ValidatedUserEvent(user));
-        return true;
+        return user;
       }
       throw new NotFoundException('error.validation.notFound');
     } catch (err) {

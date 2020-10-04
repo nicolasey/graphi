@@ -20,7 +20,7 @@ export class UsersResolver {
     return await this.userS.create(input);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => User)
   async validateUser(
     @Args('id') id: string,
     @Args('validationCode') validationCode: string,
