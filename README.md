@@ -18,3 +18,10 @@ This boilerplate is based on:
   - NodeJS
   - Redis
   - MongoDB
+
+## ToDoList
+
+  - Make MailModule with a strategy pattern to give it more sense
+  - separate modules whenever it may make sense
+  - Authentication and policy based permissions (flexibility per module)
+  - [add new idea here]
