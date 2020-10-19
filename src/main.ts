@@ -7,8 +7,8 @@ import "dotenv/config";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.use(helmet());
-  app.enableCors();
+  // app.use(helmet());
+  //app.enableCors();
   app.use(
     rateLimit({
       windowMs: process.env.RATE_LIMIT_MS,
