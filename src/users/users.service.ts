@@ -2,19 +2,18 @@ import {
   Injectable,
   Logger,
   InternalServerErrorException,
-  Inject,
-  UnsupportedMediaTypeException,
+  NotFoundException,
 } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './user.schema';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto } from './inputs/create-user.dto';
 import * as bcrypt from 'bcryptjs';
 import { EventBus } from '@nestjs/cqrs';
 import { UserCreatedEvent } from './events/created.event';
-import { NotFoundException } from '@nestjs/common';
 import * as moment from 'moment';
 import { ValidatedUserEvent } from './events/validated.event';
+import { UserInput } from './inputs/user.input';
 
 @Injectable()
 export class UsersService {
@@ -74,5 +73,17 @@ export class UsersService {
     } catch (err) {
       Logger.error(err);
     }
+  }
+
+  async update(user: UserInput): Promise<User> {
+    return await this.userModel.updateOne({ _id: user.id }, user).exec()
+      .then((res) => { return res });
+  }
+
+  async delete(id: string): Promise<string> {
+    return await this.userModel.remove({ _id: id }).exec().then(() => id).catch(err => {
+      Logger.error(err)
+      return err
+    })
   }
 }
