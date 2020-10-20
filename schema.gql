@@ -5,20 +5,51 @@
 type User {
   id: ID!
   name: String!
+  slug: String!
   email: String!
-  password: String!
+  validatedAt: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type IdResponse {
+  id: String!
+}
+
+type AuthSuccess {
+  token: String!
+  user: User!
 }
 
 type Query {
   users: [User!]!
+  login(input: LoginInput!): AuthSuccess!
+  me: User!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
 
 type Mutation {
   createUser(input: CreateUserDto!): User!
+  validateUser(validationCode: String!, id: String!): User!
+  updateUser(user: UserInput!): User!
+  deleteUser(id: String!): IdResponse!
 }
 
 input CreateUserDto {
   name: String!
   email: String!
   password: String!
+}
+
+input UserInput {
+  name: String!
+  email: String!
+  id: String!
 }
